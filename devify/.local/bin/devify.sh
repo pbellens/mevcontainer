@@ -43,8 +43,8 @@ done
 # set positional arguments in their proper place
 eval set -- "$PARAMS"
 
-imageID=${1}
-if [ -z ${imageID+x} ]; then
+imageID="${1}"
+if [ "${imageID}" == "" ]; then
     echo "Missing image ID." 1>&2
     exit 3
 fi
