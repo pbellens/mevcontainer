@@ -43,6 +43,10 @@ RUN groupadd -g ${GID} ${user} && \
     sed 's/# %wheel/%wheel/g' /etc/sudoers > /etc/sudoers.bak && \
     mv /etc/sudoers.bak /etc/sudoers
 
+RUN chown ${UID}:${GID} ${DEVENV}
+
+USER ${user}
+
 RUN git clone -b v2.0 https://github.com/NvChad/NvChad.git \
     && cd NvChad \
     && mkdir -p /home/${user}/.config/nvim \
@@ -52,10 +56,6 @@ RUN git clone https://github.com/pbellens/dotfiles.git \
     && cd dotfiles \
     && cp -r nvim/.config/nvim/lua/custom /home/${user}/.config/nvim/lua
 #RUN curl -sS https://starship.rs/install.sh | sh
-
-RUN chown ${UID}:${GID} ${DEVENV}
-
-USER ${user}
 
 RUN cat > "${HOME}/.gitconfig" <<EOS
 [user]
