@@ -56,11 +56,8 @@ fi
 
 builddir=$( mktemp -d "/tmp/devenv-XXXXXX" )
 pushd ${builddir} &> /dev/null
-git clone https://github.com/pbellens/devdeploy.git --depth=1
-if [ $? -ne 0 ]; then 
-    echo "Could not clone devdeploy repo" 1>&2
-    exit 5
-fi
+
+dfpath=$(readlink -f ~/.local/share/devenv-nvim.dockerfile)
 docker build \
     --build-arg="user=${USER}" \
     --build-arg="http_proxy=${http_proxy}" \
@@ -69,8 +66,9 @@ docker build \
     --build-arg="UID=$( id -u )" \
     --build-arg="GID=$( id -g )" \
     --build-arg="base=${imageID}" \
+	. \
     -t ${tag:-devenv-nvim} \
-    -f ~/.local/share/devenv/devenv-nvim.dockerfile .
+    -f ${dfpath}
 popd &> /dev/null
 
 # reqs:
