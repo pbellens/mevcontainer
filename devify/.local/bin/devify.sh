@@ -60,9 +60,9 @@ pushd ${builddir} &> /dev/null
 dfpath=$(readlink -f ~/.local/share/devenv-nvim.dockerfile)
 docker build \
     --build-arg="user=${USER}" \
-    --build-arg="http_proxy=${http_proxy}" \
-    --build-arg="https_proxy=${https_proxy}" \
-    --build-arg="no_proxy=${no_proxy}" \
+    --env="http_proxy=${http_proxy}" \
+    --env="https_proxy=${https_proxy}" \
+    --env="no_proxy=${no_proxy}" \
     --build-arg="UID=$( id -u )" \
     --build-arg="GID=$( id -g )" \
     --build-arg="base=${imageID}" \
