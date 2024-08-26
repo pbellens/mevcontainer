@@ -33,10 +33,12 @@ done
 eval set -- "$PARAMS"
 
 chmod u+x devify/.local/bin/devify.sh
+chmod u+x devify/.local/bin/dev.sh
 
 if stow --version &> /dev/null; then 
     stow -R -t ${HOME} container --verbose=2 
     stow -R -t ${HOME} devify --verbose=2 
+    stow -R -t ${HOME} dev --verbose=2 
 else
     # symlink manually
     echo "stow not found." 1>&2
